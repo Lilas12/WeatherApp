@@ -1,17 +1,27 @@
-# React + Vite
+# 🌤️ Dynamic Glassmorphic Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, immersive, and fully interactive weather application built using **React**, **Vite**, and **Styled-components**. The interface dynamically adapts its color palette, ambient lighting, and particle effects in real-time based on the current weather conditions of the searched city.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+* **Dynamic Backgrounds:** The entire app's gradient smooth-shifts depending on whether it's sunny, rainy, overcast, or snowy in the searched location.
+* **Ambient Weather Particles:** The background comes alive with falling snowflakes, rain streaks, or glowing golden sunbeams tailored to the live weather.
+* **3D Glassmorphism:** A premium, frosted-glass main card layered over floating, blurred neon orbs that create an elegant sense of depth.
+* **Animated Weather Symbols:** High-resolution emojis that gently float and update instantly, eliminating any risks of broken image links or third-party asset blocking.
+* **Localized Date:** Displays the current day and date cleanly formatted.
 
-## React Compiler
+## 🛠️ Tech Stack & Tools
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **React 19** – Component-based UI architecture.
+* **Vite** – Next-generation, lightning-fast frontend tooling.
+* **Styled-components** – For powerful, dynamic, and scoped CSS-in-JS.
+* **OpenWeatherMap API** – For precise geocoding and real-time live weather fetching.
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started Locally
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# WeatherApp
+Follow these quick steps to get the project up and running on your local machine:
+
+### 1. Clone the repository
+```bash
+git clone [https://github.com/your-username/WeatherApp.git](https://github.com/your-username/WeatherApp.git)
+cd WeatherApp
