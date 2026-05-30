@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// --- ANIMATIONER ---
+//ANIMATIONS
 const gradientMove = keyframes`
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -46,7 +46,7 @@ const buttonGlow = keyframes`
   100% { box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
 `;
 
-// --- STYLED COMPONENTS ---
+// STYLED COMPONENTS
 const AppContainer = styled.div`
   background: linear-gradient(-45deg, #0f172a, #1e3a8a, #0284c7, #0d9488);
   background-size: 400% 400%;
@@ -244,7 +244,7 @@ const LoadingText = styled.p`
 
 const API_KEY = 'a0382fa2b6d51c7b0306f5839d9e8099';
 
-// --- MAIN COMPONENT ---
+//COMPONENT
 function Weather() {
   const [searchInput, setSearchInput] = useState('');
   const [weatherData, setWeatherData] = useState(null);
