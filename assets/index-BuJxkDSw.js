@@ -18,27 +18,31 @@ Error generating stack: `+e.message+`
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    background-color: #0f172a; /* Mörk bas för att ljusa färger ska poppa */
+    background-color: #0f172a;
   }
 `,$n=Xn`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 `,er=Xn`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+`,tr=Xn`
   0% { opacity: 0.6; transform: scale(0.98); }
   50% { opacity: 1; transform: scale(1); }
   100% { opacity: 0.6; transform: scale(0.98); }
-`,tr=Xn`
-  0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(2deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
-`,nr=Gn.div`
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 40%, #0284c7 80%, #0d9488 100%);
+`,nr=Xn`
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-12px) scale(1.05); }
+  100% { transform: translateY(0px) scale(1); }
+`,rr=Xn`
+  0% { box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
+  50% { box-shadow: 0 4px 25px rgba(13, 148, 136, 0.7); }
+  100% { box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
+`,ir=Gn.div`
+  background: linear-gradient(-45deg, #0f172a, #1e3a8a, #0284c7, #0d9488);
+  background-size: 400% 400%;
+  animation: ${$n} 15s ease infinite;
   min-height: 100vh;
   width: 100vw;
   display: flex;
@@ -46,137 +50,144 @@ Error generating stack: `+e.message+`
   align-items: center;
   padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-`,rr=Gn.div`
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px); /* Kraftig glaseffekt */
-  -webkit-backdrop-filter: blur(16px);
+`,ar=Gn.div`
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 40px 30px;
-  border-radius: 30px; /* Ännu mjukare, modernare hörn */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Ljus kant för glaseffekten */
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(2, 132, 199, 0.2); /* Neon-blå glöd */
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   text-align: center;
   width: 100%;
-  max-width: 380px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-width: 390px;
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   &:hover {
-    transform: translateY(-8px) scale(1.01);
-    box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.6), 0 0 50px rgba(2, 132, 199, 0.4);
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   }
-`,ir=Gn.h2`
+`,or=Gn.h2`
   margin-top: 0;
   margin-bottom: 25px;
-  color: #1e293b;
-  font-size: 24px;
-  font-weight: 900;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  background: linear-gradient(135deg, #1e3a8a, #0284c7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; /* Titeln får en snygg färggradient */
-`,ar=Gn.form`
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+`,sr=Gn.form`
   display: flex;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 25px;
   width: 100%;
-`,or=Gn.input`
+`,cr=Gn.input`
   flex: 1;
-  padding: 14px 18px;
-  border: 2px solid rgba(226, 232, 240, 0.8);
+  padding: 15px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
   font-size: 16px;
   outline: none;
-  background-color: rgba(248, 250, 252, 0.8);
-  color: #1e293b;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
   font-weight: 500;
+  backdrop-filter: blur(5px);
   transition: all 0.3s ease;
 
-  &:focus {
-    border-color: #0284c7;
-    background-color: white;
-    box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.2);
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.6);
   }
-`,sr=Gn.button`
-  padding: 14px 24px;
-  background: linear-gradient(135deg, #0284c7, #0d9488); /* Intensiv blå-grön gradient */
+
+  &:focus {
+    border-color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  }
+`,lr=Gn.button`
+  padding: 15px 24px;
+  background: linear-gradient(135deg, #0284c7, #0d9488);
   color: white;
   border: none;
   border-radius: 16px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 700;
-  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+  animation: ${rr} 3s infinite ease-in-out;
   transition: all 0.3s ease;
 
   &:hover {
-    background: linear-gradient(135deg, #0369a1, #0f766e);
-    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
-    transform: translateY(-2px);
+    filter: brightness(1.1);
+    transform: translateY(-1px);
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: scale(0.96);
   }
-`,cr=Gn.div`
-  margin-top: 20px;
-  animation: ${$n} 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-`,lr=Gn.h3`
+`,ur=Gn.div`
+  margin-top: 10px;
+  animation: ${er} 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+`,dr=Gn.h3`
   margin: 10px 0 0 0;
-  color: #0f172a;
-  font-size: 28px;
+  color: #ffffff;
+  font-size: 32px;
   font-weight: 800;
   letter-spacing: -0.5px;
-`,ur=Gn.img`
-  width: 130px;
-  height: 130px;
-  margin: 0 auto;
-  filter: drop-shadow(0 12px 16px rgba(2, 132, 199, 0.2)); /* Glödande skugga under molnet */
-  animation: ${tr} 4s ease-in-out infinite;
-`,dr=Gn.p`
-  font-size: 76px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+`,fr=Gn.div`
+  font-size: 95px;
+  line-height: 1;
+  margin: 15px auto;
+  display: block;
+  user-select: none;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+  animation: ${nr} 4.5s ease-in-out infinite;
+`,pr=Gn.p`
+  font-size: 80px;
   font-weight: 900;
   margin: 0;
-  background: linear-gradient(135deg, #0284c7, #0369a1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; /* Temperaturen matchar titeln med gradient */
-  letter-spacing: -4px;
+  color: #ffffff;
+  letter-spacing: -3px;
   line-height: 1;
-`,fr=Gn.p`
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+`,mr=Gn.p`
   text-transform: capitalize;
-  color: #475569;
-  font-size: 19px;
-  margin: 10px 0 30px 0;
-  font-weight: 700;
-`,pr=Gn.div`
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 18px;
+  margin: 8px 0 25px 0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+`,hr=Gn.div`
   display: flex;
   justify-content: space-between;
-  background: linear-gradient(135deg, rgba(2, 132, 199, 0.08), rgba(13, 94, 136, 0.08)); /* Tonad panel */
-  border: 1px solid rgba(2, 132, 199, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 18px 20px;
-  border-radius: 20px;
-  margin-top: 20px;
-`,mr=Gn.p`
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 10px rgba(0, 0, 0, 0.05);
+`,gr=Gn.p`
   margin: 0;
-  font-size: 15px;
-  color: #334155;
+  font-size: 16px;
+  color: #ffffff;
   text-align: center;
   flex: 1;
   font-weight: 600;
 
   &:first-child {
-    border-right: 1px solid rgba(2, 132, 199, 0.2);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   strong {
-    color: #0284c7; /* Färgade rubriker för detaljerna */
+    color: #38bdf8;
     display: block;
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     margin-bottom: 6px;
     font-weight: 800;
   }
-`,hr=Gn.p`
+`,_r=Gn.p`
   color: white;
   font-weight: 600;
   background: linear-gradient(135deg, #ef4444, #b91c1c);
@@ -184,16 +195,16 @@ Error generating stack: `+e.message+`
   border-radius: 16px;
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
   margin: 20px 0;
-  animation: ${$n} 0.4s ease-out;
-`,gr=Gn.p`
-  color: #0284c7;
+  animation: ${er} 0.4s ease-out;
+`,vr=Gn.p`
+  color: #38bdf8;
   font-weight: 800;
   text-align: center;
   margin: 30px 0;
   font-size: 17px;
   letter-spacing: 0.5px;
-  animation: ${er} 1.2s infinite ease-in-out;
-`,_r=`a0382fa2b6d51c7b0306f5839d9e8099`;function vr(){let[e,t]=(0,M.useState)(``),[n,r]=(0,M.useState)(null),[i,a]=(0,M.useState)(!1),[o,s]=(0,M.useState)(null);return(0,M.useEffect)(()=>{(async()=>{a(!0),s(null);try{let e=await(await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=Syria&limit=1&appid=${_r}`)).json();if(!e||e.length===0)return;let{lat:t,lon:n,name:i}=e[0],a=await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${t}&lon=${n}&exclude=minutely,hourly,daily,alerts&units=metric&lang=en&appid=${_r}`);if(!a.ok){let e=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Syria&appid=${_r}&units=metric&lang=en`);if(!e.ok)return;let t=await e.json();r({name:t.name,temp:t.main.temp,description:t.weather[0].description,icon:t.weather[0].icon,humidity:t.main.humidity,wind:t.wind.speed});return}let o=await a.json();r({name:i,temp:o.current.temp,description:o.current.weather[0].description,icon:o.current.weather[0].icon,humidity:o.current.humidity,wind:o.current.wind_speed})}catch(e){console.error(e)}finally{a(!1)}})()},[]),(0,N.jsxs)(N.Fragment,{children:[(0,N.jsx)(Qn,{}),` `,(0,N.jsx)(nr,{children:(0,N.jsxs)(rr,{children:[(0,N.jsx)(ir,{children:`Weather Management App`}),(0,N.jsxs)(ar,{onSubmit:async n=>{if(n.preventDefault(),e.trim()!==``){a(!0),s(null);try{let n=await(await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${e}&limit=1&appid=${_r}`)).json();if(!n||n.length===0)throw Error(`City not found. Please check the spelling.`);let{lat:i,lon:a,name:o}=n[0],s=await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${i}&lon=${a}&exclude=minutely,hourly,daily,alerts&units=metric&lang=en&appid=${_r}`);if(!s.ok){let n=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${e}&appid=${_r}&units=metric&lang=en`);if(!n.ok)throw Error(`City not found.`);let i=await n.json();r({name:i.name,temp:i.main.temp,description:i.weather[0].description,icon:i.weather[0].icon,humidity:i.main.humidity,wind:i.wind.speed}),t(``);return}let c=await s.json();r({name:o,temp:c.current.temp,description:c.current.weather[0].description,icon:c.current.weather[0].icon,humidity:c.current.humidity,wind:c.current.wind_speed}),t(``)}catch(e){s(e.message),r(null)}finally{a(!1)}}},children:[(0,N.jsx)(or,{type:`text`,placeholder:`Search for a city...`,value:e,onChange:e=>t(e.target.value)}),(0,N.jsx)(sr,{type:`submit`,children:`Search`})]}),i&&(0,N.jsx)(gr,{children:`Fetching weather data...`}),o&&(0,N.jsx)(hr,{children:o}),n&&!i&&(0,N.jsxs)(cr,{children:[(0,N.jsx)(lr,{children:n.name}),(0,N.jsx)(ur,{src:`https://openweathermap.org/img/wn/${n.icon}@2x.png`,alt:n.description}),(0,N.jsxs)(dr,{children:[Math.round(n.temp),`°C`]}),(0,N.jsx)(fr,{children:n.description}),(0,N.jsxs)(pr,{children:[(0,N.jsxs)(mr,{children:[(0,N.jsx)(`strong`,{children:`Humidity`}),` `,n.humidity,`%`]}),(0,N.jsxs)(mr,{children:[(0,N.jsx)(`strong`,{children:`Wind`}),` `,n.wind,` m/s`]})]})]})]})})]})}var yr=qn`
+  animation: ${tr} 1.2s infinite ease-in-out;
+`,yr=`a0382fa2b6d51c7b0306f5839d9e8099`;function br(){let[e,t]=(0,M.useState)(``),[n,r]=(0,M.useState)(null),[i,a]=(0,M.useState)(!1),[o,s]=(0,M.useState)(null);return(0,M.useEffect)(()=>{(async()=>{a(!0),s(null);try{let e=await(await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=Syria&limit=1&appid=${yr}`)).json();if(!e||e.length===0)return;let{lat:t,lon:n,name:i}=e[0],a=await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${t}&lon=${n}&exclude=minutely,hourly,daily,alerts&units=metric&lang=en&appid=${yr}`);if(!a.ok){let e=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Syria&appid=${yr}&units=metric&lang=en`);if(!e.ok)return;let t=await e.json();r({name:t.name,temp:t.main.temp,description:t.weather[0].description,icon:t.weather[0].icon,humidity:t.main.humidity,wind:t.wind.speed});return}let o=await a.json();r({name:i,temp:o.current.temp,description:o.current.weather[0].description,icon:o.current.weather[0].icon,humidity:o.current.humidity,wind:o.current.wind_speed})}catch(e){console.error(e)}finally{a(!1)}})()},[]),(0,N.jsxs)(N.Fragment,{children:[(0,N.jsx)(Qn,{}),(0,N.jsx)(ir,{children:(0,N.jsxs)(ar,{children:[(0,N.jsx)(or,{children:`Weather App`}),(0,N.jsxs)(sr,{onSubmit:async n=>{if(n.preventDefault(),e.trim()!==``){a(!0),s(null);try{let n=await(await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${e}&limit=1&appid=${yr}`)).json();if(!n||n.length===0)throw Error(`City not found. Please check the spelling.`);let{lat:i,lon:a,name:o}=n[0],s=await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${i}&lon=${a}&exclude=minutely,hourly,daily,alerts&units=metric&lang=en&appid=${yr}`);if(!s.ok){let n=await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${e}&appid=${yr}&units=metric&lang=en`);if(!n.ok)throw Error(`City not found.`);let i=await n.json();r({name:i.name,temp:i.main.temp,description:i.weather[0].description,icon:i.weather[0].icon,humidity:i.main.humidity,wind:i.wind.speed}),t(``);return}let c=await s.json();r({name:o,temp:c.current.temp,description:c.current.weather[0].description,icon:c.current.weather[0].icon,humidity:c.current.humidity,wind:c.current.wind_speed}),t(``)}catch(e){s(e.message),r(null)}finally{a(!1)}}},children:[(0,N.jsx)(cr,{type:`text`,placeholder:`Search city...`,value:e,onChange:e=>t(e.target.value)}),(0,N.jsx)(lr,{type:`submit`,children:`Search`})]}),i&&(0,N.jsx)(vr,{children:`Fetching weather data...`}),o&&(0,N.jsx)(_r,{children:o}),n&&!i&&(0,N.jsxs)(ur,{children:[(0,N.jsx)(dr,{children:n.name}),(0,N.jsx)(fr,{role:`img`,"aria-label":n.description,children:(e=>{if(!e)return`🌤️`;switch(e.replace(`n`,`d`)){case`01d`:return`☀️`;case`02d`:return`⛅`;case`03d`:return`☁️`;case`04d`:return`☁️`;case`09d`:return`🌧️`;case`10d`:return`🌦️`;case`11d`:return`⛈️`;case`13d`:return`❄️`;case`50d`:return`🌫️`;default:return`🌤️`}})(n.icon)}),(0,N.jsxs)(pr,{children:[Math.round(n.temp),`°C`]}),(0,N.jsx)(mr,{children:n.description}),(0,N.jsxs)(hr,{children:[(0,N.jsxs)(gr,{children:[(0,N.jsx)(`strong`,{children:`Humidity`}),` `,n.humidity,`%`]}),(0,N.jsxs)(gr,{children:[(0,N.jsx)(`strong`,{children:`Wind`}),` `,n.wind,` m/s`]})]})]})]})})]})}var xr=qn`
   body {
     margin: 0;
     padding: 0;
@@ -205,10 +216,10 @@ Error generating stack: `+e.message+`
     align-items: center;
     min-height: 100vh;
   }
-`,br=Gn.div`
+`,Sr=Gn.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   padding: 20px;
-`;function xr(){return(0,N.jsxs)(N.Fragment,{children:[(0,N.jsx)(yr,{}),(0,N.jsx)(br,{children:(0,N.jsx)(vr,{})})]})}Ge.createRoot(document.getElementById(`root`)).render((0,N.jsx)(M.StrictMode,{children:(0,N.jsx)(xr,{})}));
+`;function Cr(){return(0,N.jsxs)(N.Fragment,{children:[(0,N.jsx)(xr,{}),(0,N.jsx)(Sr,{children:(0,N.jsx)(br,{})})]})}Ge.createRoot(document.getElementById(`root`)).render((0,N.jsx)(M.StrictMode,{children:(0,N.jsx)(Cr,{})}));
