@@ -1,7 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import Weather from './Weather.jsx';
 
-// 1. Globala stilar för hela applikationen (ersätter body-styling i CSS)
+
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
@@ -16,7 +16,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// 2. Styled component för själva App-containern
 const AppContainer = styled.div`
   display: flex;
   justify-content: center;
