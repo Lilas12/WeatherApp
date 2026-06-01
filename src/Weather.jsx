@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import './index.css';
 
-// simple animations
+// Animations
 const moveUp = keyframes`
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -15,70 +15,38 @@ const moveUp = keyframes`
 `;
 
 const gentleFloat = keyframes`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-`;
-
-const pulseEffect = keyframes`
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(14, 165, 233, 0);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 `;
 
 const spinSlow = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-const slideSide = keyframes`
-  0%, 100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(20px);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 `;
 
 // --- Styled Components ---
 const Wrapper = styled.div`
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px;
-  position: relative;
+  padding: 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
   overflow: hidden;
+  box-sizing: border-box;
 
   &::before {
     content: '☀️';
     position: absolute;
-    font-size: 250px;
-    top: -80px;
-    right: -80px;
-    opacity: 0.15;
-    animation: ${spinSlow} 30s linear infinite;
-    pointer-events: none;
-  }
-
-  &::after {
-    content: '☁️';
-    position: absolute;
-    font-size: 180px;
-    bottom: -60px;
-    left: -60px;
+    font-size: clamp(130px, 22vw, 260px);
+    top: -50px;
+    right: -50px;
     opacity: 0.12;
-    animation: ${slideSide} 15s ease-in-out infinite;
+    animation: ${spinSlow} 30s linear infinite;
     pointer-events: none;
   }
 `;
@@ -86,45 +54,41 @@ const Wrapper = styled.div`
 const Card = styled.div`
   background: var(--card);
   backdrop-filter: blur(20px);
-  border-radius: 64px;
-  padding: 42px 38px;
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: clamp(30px, 6.5vw, 44px);
+  padding: clamp(22px, 5.5vw, 36px);
   width: 100%;
-  max-width: 480px;
+  max-width: 460px;                      /* JUSTERAD: Perfekt mellanstorlek, balanserad och snygg */
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
   position: relative;
   z-index: 1;
-  animation: ${moveUp} 0.5s ease-out;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.2);
-  }
+  animation: ${moveUp} 0.4s ease-out;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 4.5vw, 26px);
+  box-sizing: border-box;
 `;
 
 const Header = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 35px;
 
   .brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 
     .logoIcon {
-      font-size: 32px;
-      animation: ${spinSlow} 8s linear infinite;
-      display: inline-block;
+      font-size: clamp(24px, 5vw, 32px);
+      animation: ${spinSlow} 12s linear infinite;
     }
 
     h1 {
-      font-size: 26px;
+      font-size: clamp(21px, 5vw, 26px);
       font-weight: 800;
       background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3));
-      background-size: 200% auto;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -135,26 +99,27 @@ const Header = styled.div`
 
 const SearchForm = styled.form`
   display: flex;
-  gap: 12px;
-  margin-bottom: 40px;
+  gap: 10px;
+  width: 100%;
 `;
 
 const SearchInput = styled.input`
   flex: 1;
-  padding: 16px 22px;
+  padding: clamp(11px, 3vw, 15px) 18px;
   border: 2px solid var(--border);
-  border-radius: 60px;
+  border-radius: 50px;
   background: rgba(255, 255, 255, 0.8);
   color: var(--text);
-  font-size: 15px;
+  font-size: clamp(13px, 3.5vw, 16px);
   font-weight: 500;
   outline: none;
   transition: all 0.2s;
+  min-width: 0;
 
   &:focus {
-    border-color: var(--accent-2);
-    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+    border-color: var(--accent);
     background: white;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
   }
 
   &::placeholder {
@@ -163,201 +128,185 @@ const SearchInput = styled.input`
 `;
 
 const SearchBtn = styled.button`
-  padding: 16px 32px;
+  padding: 0 clamp(18px, 4vw, 26px);
   background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
   color: white;
   border: none;
-  border-radius: 60px;
+  border-radius: 50px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: clamp(13px, 3.5vw, 15px);
   cursor: pointer;
   transition: all 0.2s;
-  animation: ${pulseEffect} 2s infinite;
+  white-space: nowrap;
 
   &:hover {
-    transform: scale(1.02);
     filter: brightness(1.05);
-    padding-right: 38px;
   }
-
   &:active {
-    transform: scale(0.98);
+    transform: scale(0.96);
   }
 `;
 
 const WeatherDisplay = styled.div`
   text-align: center;
-  animation: ${moveUp} 0.4s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 `;
 
 const CityWrapper = styled.div`
-  margin-bottom: 20px;
+  width: 100%;
 
   h2 {
-    font-size: 38px;
+    font-size: clamp(24px, 6vw, 34px);
     font-weight: 800;
     color: var(--text);
-    letter-spacing: -1px;
-    display: inline-flex;
+    letter-spacing: -0.5px;
+    display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     &::before {
       content: '📍';
-      font-size: 24px;
-      opacity: 0.7;
+      font-size: clamp(18px, 4.5vw, 24px);
     }
   }
 `;
 
 const DateText = styled.p`
-  color: var(--accent-3);
-  font-size: 13px;
+  color: var(--text-secondary);
+  font-size: clamp(11px, 3vw, 13px);
   font-weight: 600;
-  margin-top: 8px;
-  font-family: var(--mono);
-  background: rgba(234, 179, 8, 0.15);
-  display: inline-block;
-  padding: 5px 18px;
-  border-radius: 60px;
-  letter-spacing: 0.5px;
+  margin-top: 4px;
+  opacity: 0.8;
 `;
 
 const IconArea = styled.div`
-  margin: 20px 0;
+  margin: clamp(10px, 4vw, 18px) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .weatherIcon {
-    font-size: 110px;
-    display: inline-block;
-    animation: ${gentleFloat} 3s ease-in-out infinite;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+    font-size: clamp(66px, 16vw, 96px); /* Lagom krispig storlek på ikon */
+    animation: ${gentleFloat} 3.5s ease-in-out infinite;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.08));
+    line-height: 1;
   }
 
   .tempValue {
-    font-size: 74px;
+    font-size: clamp(50px, 13vw, 72px); /* Tydlig temperatur utan att dominera för mycket */
     font-weight: 800;
     color: var(--text);
-    letter-spacing: -3px;
-    margin-top: 10px;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-top: 4px;
 
     span {
-      font-size: 28px;
+      font-size: clamp(22px, 5vw, 30px);
       font-weight: 600;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--accent);
+      margin-left: 2px;
     }
   }
 `;
 
 const ConditionTag = styled.p`
   color: white;
-  font-size: 16px;
+  font-size: clamp(12px, 3.2vw, 14px);
   font-weight: 600;
-  margin: 15px 0 30px;
+  margin-bottom: 4px;
   text-transform: capitalize;
-  display: inline-block;
-  padding: 10px 28px;
+  padding: 6px 20px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  border-radius: 60px;
-  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
-  transition: all 0.2s;
-
-  &:hover {
-    transform: scale(1.03);
-    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
-  }
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2);
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 const StatsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 25px;
+  gap: clamp(6px, 2vw, 14px);
+  width: 100%;
+  margin-top: 14px;
 `;
 
 const StatItem = styled.div`
-  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(34, 197, 94, 0.1));
-  padding: 16px 12px;
-  border-radius: 32px;
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border);
-  transition: all 0.2s;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-5px);
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-
-    .label, .value, .unit {
-      color: white;
-    }
-  }
+  background: rgba(14, 165, 233, 0.06);
+  padding: clamp(9px, 3vw, 15px) 4px;
+  border-radius: 18px;
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
 
   .label {
-    font-size: 11px;
+    font-size: clamp(8px, 2vw, 10px);
     font-weight: 700;
     color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 1px;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
   }
 
   .value {
-    font-size: 22px;
+    font-size: clamp(13px, 3.8vw, 18px);
     font-weight: 800;
     color: var(--text);
+    white-space: nowrap;
   }
 
   .unit {
-    font-size: 11px;
-    font-weight: 500;
+    font-size: clamp(9px, 2.2vw, 11px);
+    font-weight: 600;
     color: var(--text-secondary);
-    margin-left: 2px;
+    margin-left: 1px;
   }
 `;
 
 const ErrorBox = styled.div`
   background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
   color: #ef4444;
-  padding: 14px;
-  border-radius: 60px;
+  padding: 10px;
+  border-radius: 50px;
   text-align: center;
   font-weight: 500;
-  margin-top: 20px;
+  font-size: 14px;
+  width: 100%;
 `;
 
 const LoadingBox = styled.div`
   text-align: center;
-  padding: 50px;
+  padding: 20px;
+  width: 100%;
 
   .loader {
-    width: 50px;
-    height: 50px;
+    width: 34px;
+    height: 34px;
     border: 3px solid rgba(14, 165, 233, 0.2);
-    border-top: 3px solid var(--accent-3);
-    border-right: 3px solid var(--accent-2);
+    border-top: 3px solid var(--accent);
     border-radius: 50%;
-    animation: spinRound 0.8s linear infinite;
-    margin: 0 auto 15px;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 10px;
   }
-
-  @keyframes spinRound {
-    to { transform: rotate(360deg); }
-  }
-
-  p {
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 `;
 
 const API_KEY = 'a0382fa2b6d51c7b0306f5839d9e8099';
 
-// helpers
 const getWeatherIcon = (code) => {
   if (!code) return '🌤️';
   const icons = {
@@ -457,14 +406,14 @@ function Weather() {
         </Header>
 
         <SearchForm onSubmit={handleFormSubmit}>
-          <SearchInput
-            type="text"
-            placeholder="Search city..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <SearchBtn type="submit">Search</SearchBtn>
-        </SearchForm>
+  <SearchInput
+    type="text"
+    placeholder="Search city..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+  />
+  <SearchBtn type="submit">Search</SearchBtn>
+</SearchForm>
 
         {isFetching && (
           <LoadingBox>
@@ -491,7 +440,7 @@ function Weather() {
 
             <StatsContainer>
               <StatItem>
-                <span className="label">💧 Humidity</span>
+                <span className="label">💧 Humid</span>
                 <span className="value">{weatherInfo.humidity}<span className="unit">%</span></span>
               </StatItem>
               <StatItem>
@@ -499,7 +448,7 @@ function Weather() {
                 <span className="value">{weatherInfo.windSpeed}<span className="unit">m/s</span></span>
               </StatItem>
               <StatItem>
-                <span className="label">🌡️ Feels like</span>
+                <span className="label">🌡️ Feels</span>
                 <span className="value">{weatherInfo.feelsLike}<span className="unit">°C</span></span>
               </StatItem>
             </StatsContainer>
