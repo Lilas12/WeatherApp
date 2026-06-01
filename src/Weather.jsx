@@ -1,423 +1,512 @@
 import { useState, useEffect } from 'react';
-import styled, { keyframes, createGlobalStyle } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import './index.css';
 
-// --- GLOBAL STYLES ---
-const GlobalStyle = createGlobalStyle`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+// simple animations
+const moveUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  body, html {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    background-color: #0f172a;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 `;
 
-//ANIMATIONS
-const gradientMove = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+const gentleFloat = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 `;
 
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+const pulseEffect = keyframes`
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(14, 165, 233, 0);
+  }
 `;
 
-const pulse = keyframes`
-  0% { opacity: 0.6; transform: scale(0.98); }
-  50% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0.6; transform: scale(0.98); }
+const spinSlow = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 `;
 
-const float = keyframes`
-  0% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-12px) scale(1.05); }
-  100% { transform: translateY(0px) scale(1); }
+const slideSide = keyframes`
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px);
+  }
 `;
 
-const buttonGlow = keyframes`
-  0% { box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
-  50% { box-shadow: 0 4px 25px rgba(13, 148, 136, 0.7); }
-  100% { box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); }
-`;
-
-// STYLED COMPONENTS
-const AppContainer = styled.div`
-  background: linear-gradient(-45deg, #0f172a, #1e3a8a, #0284c7, #0d9488);
-  background-size: 400% 400%;
-  animation: ${gradientMove} 15s ease infinite;
+// --- Styled Components ---
+const Wrapper = styled.div`
   min-height: 100vh;
-  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-`;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
 
-const WeatherCard = styled.div`
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 40px 30px;
-  border-radius: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  text-align: center;
-  width: 100%;
-  max-width: 390px;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  &::before {
+    content: '☀️';
+    position: absolute;
+    font-size: 250px;
+    top: -80px;
+    right: -80px;
+    opacity: 0.15;
+    animation: ${spinSlow} 30s linear infinite;
+    pointer-events: none;
+  }
 
-  &:hover {
-    transform: translateY(-5px);
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  &::after {
+    content: '☁️';
+    position: absolute;
+    font-size: 180px;
+    bottom: -60px;
+    left: -60px;
+    opacity: 0.12;
+    animation: ${slideSide} 15s ease-in-out infinite;
+    pointer-events: none;
   }
 `;
 
-const Title = styled.h2`
-  margin-top: 0;
-  margin-bottom: 25px;
-  color: #ffffff;
-  font-size: 22px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+const Card = styled.div`
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  border-radius: 64px;
+  padding: 42px 38px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+  animation: ${moveUp} 0.5s ease-out;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .logoIcon {
+      font-size: 32px;
+      animation: ${spinSlow} 8s linear infinite;
+      display: inline-block;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+  }
 `;
 
 const SearchForm = styled.form`
   display: flex;
   gap: 12px;
-  margin-bottom: 25px;
-  width: 100%;
+  margin-bottom: 40px;
 `;
 
 const SearchInput = styled.input`
   flex: 1;
-  padding: 15px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  font-size: 16px;
-  outline: none;
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  padding: 16px 22px;
+  border: 2px solid var(--border);
+  border-radius: 60px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--text);
+  font-size: 15px;
   font-weight: 500;
-  backdrop-filter: blur(5px);
-  transition: all 0.3s ease;
-
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-  }
+  outline: none;
+  transition: all 0.2s;
 
   &:focus {
-    border-color: rgba(255, 255, 255, 0.7);
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-2);
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+    background: white;
+  }
+
+  &::placeholder {
+    color: var(--text-secondary);
   }
 `;
 
-const SearchButton = styled.button`
-  padding: 15px 24px;
-  background: linear-gradient(135deg, #0284c7, #0d9488);
+const SearchBtn = styled.button`
+  padding: 16px 32px;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
   color: white;
   border: none;
-  border-radius: 16px;
-  cursor: pointer;
-  font-size: 16px;
+  border-radius: 60px;
   font-weight: 700;
-  animation: ${buttonGlow} 3s infinite ease-in-out;
-  transition: all 0.3s ease;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  animation: ${pulseEffect} 2s infinite;
 
   &:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
+    transform: scale(1.02);
+    filter: brightness(1.05);
+    padding-right: 38px;
   }
 
   &:active {
-    transform: scale(0.96);
+    transform: scale(0.98);
   }
 `;
 
-const WeatherInfo = styled.div`
-  margin-top: 10px;
-  animation: ${fadeIn} 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-`;
-
-const CityName = styled.h3`
-  margin: 10px 0 0 0;
-  color: #ffffff;
-  font-size: 32px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-`;
-
-const EmojiIcon = styled.div`
-  font-size: 95px;
-  line-height: 1;
-  margin: 15px auto;
-  display: block;
-  user-select: none;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
-  animation: ${float} 4.5s ease-in-out infinite;
-`;
-
-const Temperature = styled.p`
-  font-size: 80px;
-  font-weight: 900;
-  margin: 0;
-  color: #ffffff;
-  letter-spacing: -3px;
-  line-height: 1;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-`;
-
-const Condition = styled.p`
-  text-transform: capitalize;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 18px;
-  margin: 8px 0 25px 0;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-`;
-
-const DetailsContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 18px 20px;
-  border-radius: 24px;
-  backdrop-filter: blur(10px);
-  box-shadow: inset 0 1px 10px rgba(0, 0, 0, 0.05);
-`;
-
-const DetailText = styled.p`
-  margin: 0;
-  font-size: 16px;
-  color: #ffffff;
+const WeatherDisplay = styled.div`
   text-align: center;
-  flex: 1;
-  font-weight: 600;
+  animation: ${moveUp} 0.4s ease-out;
+`;
 
-  &:first-child {
-    border-right: 1px solid rgba(255, 255, 255, 0.15);
-  }
+const CityWrapper = styled.div`
+  margin-bottom: 20px;
 
-  strong {
-    color: #38bdf8;
-    display: block;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 6px;
+  h2 {
+    font-size: 38px;
     font-weight: 800;
+    color: var(--text);
+    letter-spacing: -1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    &::before {
+      content: '📍';
+      font-size: 24px;
+      opacity: 0.7;
+    }
   }
 `;
 
-const ErrorMessage = styled.p`
-  color: white;
+const DateText = styled.p`
+  color: var(--accent-3);
+  font-size: 13px;
   font-weight: 600;
-  background: linear-gradient(135deg, #ef4444, #b91c1c);
-  padding: 14px;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-  margin: 20px 0;
-  animation: ${fadeIn} 0.4s ease-out;
+  margin-top: 8px;
+  font-family: var(--mono);
+  background: rgba(234, 179, 8, 0.15);
+  display: inline-block;
+  padding: 5px 18px;
+  border-radius: 60px;
+  letter-spacing: 0.5px;
 `;
 
-const LoadingText = styled.p`
-  color: #38bdf8;
-  font-weight: 800;
+const IconArea = styled.div`
+  margin: 20px 0;
+
+  .weatherIcon {
+    font-size: 110px;
+    display: inline-block;
+    animation: ${gentleFloat} 3s ease-in-out infinite;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+  }
+
+  .tempValue {
+    font-size: 74px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -3px;
+    margin-top: 10px;
+
+    span {
+      font-size: 28px;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+`;
+
+const ConditionTag = styled.p`
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 15px 0 30px;
+  text-transform: capitalize;
+  display: inline-block;
+  padding: 10px 28px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-radius: 60px;
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
+  }
+`;
+
+const StatsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 25px;
+`;
+
+const StatItem = styled.div`
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(34, 197, 94, 0.1));
+  padding: 16px 12px;
+  border-radius: 32px;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+
+    .label, .value, .unit {
+      color: white;
+    }
+  }
+
+  .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .unit {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-left: 2px;
+  }
+`;
+
+const ErrorBox = styled.div`
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  padding: 14px;
+  border-radius: 60px;
   text-align: center;
-  margin: 30px 0;
-  font-size: 17px;
-  letter-spacing: 0.5px;
-  animation: ${pulse} 1.2s infinite ease-in-out;
+  font-weight: 500;
+  margin-top: 20px;
+`;
+
+const LoadingBox = styled.div`
+  text-align: center;
+  padding: 50px;
+
+  .loader {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(14, 165, 233, 0.2);
+    border-top: 3px solid var(--accent-3);
+    border-right: 3px solid var(--accent-2);
+    border-radius: 50%;
+    animation: spinRound 0.8s linear infinite;
+    margin: 0 auto 15px;
+  }
+
+  @keyframes spinRound {
+    to { transform: rotate(360deg); }
+  }
+
+  p {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
 `;
 
 const API_KEY = 'a0382fa2b6d51c7b0306f5839d9e8099';
 
-//COMPONENT
-function Weather() {
-  const [searchInput, setSearchInput] = useState('');
-  const [weatherData, setWeatherData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const getWeatherEmoji = (iconCode) => {
-    if (!iconCode) return '🌤️';
-    const code = iconCode.replace('n', 'd');
-    switch(code) {
-      case '01d': return '☀️';
-      case '02d': return '⛅';
-      case '03d': return '☁️';
-      case '04d': return '☁️';
-      case '09d': return '🌧️';
-      case '10d': return '🌦️';
-      case '11d': return '⛈️';
-      case '13d': return '❄️';
-      case '50d': return '🌫️';
-      default: return '🌤️';
-    }
+// helpers
+const getWeatherIcon = (code) => {
+  if (!code) return '🌤️';
+  const icons = {
+    '01d': '☀️', '01n': '🌙', '02d': '⛅', '02n': '☁️',
+    '03d': '☁️', '03n': '☁️', '04d': '☁️', '04n': '☁️',
+    '09d': '🌧️', '09n': '🌧️', '10d': '🌦️', '10n': '🌧️',
+    '11d': '⛈️', '11n': '⛈️', '13d': '❄️', '13n': '❄️',
+    '50d': '🌫️', '50n': '🌫️'
   };
+  return icons[code] || '🌤️';
+};
+
+const getCurrentDate = () => {
+  return new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric'
+  });
+};
+
+function Weather() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [weatherInfo, setWeatherInfo] = useState(null);
+  const [isFetching, setIsFetching] = useState(false);
+  const [errMsg, setErrMsg] = useState(null);
 
   useEffect(() => {
-    const fetchInitialWeather = async () => {
-      setLoading(true);
-      setError(null);
+    const loadDefault = async () => {
+      setIsFetching(true);
       try {
-        const geoResponse = await fetch(
-          `https://api.openweathermap.org/geo/1.0/direct?q=Syria&limit=1&appid=${API_KEY}`
-        );
-        const geoData = await geoResponse.json();
-        if (!geoData || geoData.length === 0) return;
+        const geoRes = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=Damascus&limit=1&appid=${API_KEY}`);
+        const geoData = await geoRes.json();
+        if (!geoData.length) return;
 
-        const { lat, lon, name } = geoData[0];
-        const weatherResponse = await fetch(
-          `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily,alerts&units=metric&lang=en&appid=${API_KEY}`
-        );
+        const weatherRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${geoData[0].lat}&lon=${geoData[0].lon}&appid=${API_KEY}&units=metric`);
+        const data = await weatherRes.json();
 
-        if (!weatherResponse.ok) {
-          const fallbackResponse = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=Syria&appid=${API_KEY}&units=metric&lang=en`
-          );
-          if (!fallbackResponse.ok) return;
-          const fallbackData = await fallbackResponse.json();
-          setWeatherData({
-            name: fallbackData.name,
-            temp: fallbackData.main.temp,
-            description: fallbackData.weather[0].description,
-            icon: fallbackData.weather[0].icon,
-            humidity: fallbackData.main.humidity,
-            wind: fallbackData.wind.speed
-          });
-          return;
-        }
-
-        const data = await weatherResponse.json();
-        setWeatherData({
-          name: name,
-          temp: data.current.temp,
-          description: data.current.weather[0].description,
-          icon: data.current.weather[0].icon,
-          humidity: data.current.humidity,
-          wind: data.current.wind_speed
+        setWeatherInfo({
+          name: geoData[0].name,
+          temp: Math.round(data.main.temp),
+          feelsLike: Math.round(data.main.feels_like),
+          description: data.weather[0].description,
+          iconCode: data.weather[0].icon,
+          humidity: data.main.humidity,
+          windSpeed: data.wind.speed
         });
       } catch (err) {
         console.error(err);
       } finally {
-        setLoading(false);
+        setIsFetching(false);
       }
     };
-
-    fetchInitialWeather();
+    loadDefault();
   }, []);
 
-  const handleSearch = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (searchInput.trim() === '') return;
+    if (!searchTerm.trim()) return;
 
-    setLoading(true);
-    setError(null);
+    setIsFetching(true);
+    setErrMsg(null);
 
     try {
-      const geoResponse = await fetch(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=1&appid=${API_KEY}`
-      );
-      const geoData = await geoResponse.json();
+      const geoRes = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&limit=1&appid=${API_KEY}`);
+      const geoData = await geoRes.json();
+      if (!geoData.length) throw new Error('City not found');
 
-      if (!geoData || geoData.length === 0) {
-        throw new Error('City not found. Please check the spelling.');
-      }
+      const weatherRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${geoData[0].lat}&lon=${geoData[0].lon}&appid=${API_KEY}&units=metric`);
+      const data = await weatherRes.json();
 
-      const { lat, lon, name } = geoData[0];
-      const weatherResponse = await fetch(
-        `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily,alerts&units=metric&lang=en&appid=${API_KEY}`
-      );
-
-      if (!weatherResponse.ok) {
-        const fallbackResponse = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${searchInput}&appid=${API_KEY}&units=metric&lang=en`
-        );
-        if (!fallbackResponse.ok) throw new Error('City not found.');
-        const fallbackData = await fallbackResponse.json();
-        setWeatherData({
-          name: fallbackData.name,
-          temp: fallbackData.main.temp,
-          description: fallbackData.weather[0].description,
-          icon: fallbackData.weather[0].icon,
-          humidity: fallbackData.main.humidity,
-          wind: fallbackData.wind.speed
-        });
-        setSearchInput('');
-        return;
-      }
-
-      const data = await weatherResponse.json();
-      setWeatherData({
-        name: name,
-        temp: data.current.temp,
-        description: data.current.weather[0].description,
-        icon: data.current.weather[0].icon,
-        humidity: data.current.humidity,
-        wind: data.current.wind_speed
+      setWeatherInfo({
+        name: geoData[0].name,
+        temp: Math.round(data.main.temp),
+        feelsLike: Math.round(data.main.feels_like),
+        description: data.weather[0].description,
+        iconCode: data.weather[0].icon,
+        humidity: data.main.humidity,
+        windSpeed: data.wind.speed
       });
-      setSearchInput('');
+
+      setSearchTerm('');
     } catch (err) {
-      setError(err.message);
-      setWeatherData(null);
+      setErrMsg(err.message);
     } finally {
-      setLoading(false);
+      setIsFetching(false);
     }
   };
 
   return (
-    <>
-      <GlobalStyle />
-      <AppContainer>
-        <WeatherCard>
-          <Title>Weather App</Title>
+    <Wrapper>
+      <Card>
+        <Header>
+          <div className="brand">
+            <span className="logoIcon">☀️</span>
+            <h1>WeatherWise</h1>
+          </div>
+        </Header>
 
-          <SearchForm onSubmit={handleSearch}>
-            <SearchInput
-              type="text"
-              placeholder="Search city..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-            <SearchButton type="submit">Search</SearchButton>
-          </SearchForm>
+        <SearchForm onSubmit={handleFormSubmit}>
+          <SearchInput
+            type="text"
+            placeholder="Search city..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <SearchBtn type="submit">Search</SearchBtn>
+        </SearchForm>
 
-          {loading && <LoadingText>Fetching weather data...</LoadingText>}
-          {error && <ErrorMessage>{error}</ErrorMessage>}
+        {isFetching && (
+          <LoadingBox>
+            <div className="loader"></div>
+            <p>Loading weather...</p>
+          </LoadingBox>
+        )}
 
-          {weatherData && !loading && (
-            <WeatherInfo>
-              <CityName>{weatherData.name}</CityName>
+        {errMsg && <ErrorBox>{errMsg}</ErrorBox>}
 
-              <EmojiIcon role="img" aria-label={weatherData.description}>
-                {getWeatherEmoji(weatherData.icon)}
-              </EmojiIcon>
+        {weatherInfo && !isFetching && (
+          <WeatherDisplay>
+            <CityWrapper>
+              <h2>{weatherInfo.name}</h2>
+              <DateText>{getCurrentDate()}</DateText>
+            </CityWrapper>
 
-              <Temperature>{Math.round(weatherData.temp)}°C</Temperature>
-              <Condition>{weatherData.description}</Condition>
+            <IconArea>
+              <div className="weatherIcon">{getWeatherIcon(weatherInfo.iconCode)}</div>
+              <div className="tempValue">{weatherInfo.temp}<span>°C</span></div>
+            </IconArea>
 
-              <DetailsContainer>
-                <DetailText><strong>Humidity</strong> {weatherData.humidity}%</DetailText>
-                <DetailText><strong>Wind</strong> {weatherData.wind} m/s</DetailText>
-              </DetailsContainer>
-            </WeatherInfo>
-          )}
-        </WeatherCard>
-      </AppContainer>
-    </>
+            <ConditionTag>{weatherInfo.description}</ConditionTag>
+
+            <StatsContainer>
+              <StatItem>
+                <span className="label">💧 Humidity</span>
+                <span className="value">{weatherInfo.humidity}<span className="unit">%</span></span>
+              </StatItem>
+              <StatItem>
+                <span className="label">💨 Wind</span>
+                <span className="value">{weatherInfo.windSpeed}<span className="unit">m/s</span></span>
+              </StatItem>
+              <StatItem>
+                <span className="label">🌡️ Feels like</span>
+                <span className="value">{weatherInfo.feelsLike}<span className="unit">°C</span></span>
+              </StatItem>
+            </StatsContainer>
+          </WeatherDisplay>
+        )}
+      </Card>
+    </Wrapper>
   );
 }
 
