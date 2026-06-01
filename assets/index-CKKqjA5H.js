@@ -11,312 +11,266 @@ Error generating stack: `+e.message+`
 `}return r})(this))}rehydrate(){!this.server&&Qe&&en(this)}reconstructWithOptions(t,n=!0){let r=new e(Object.assign(Object.assign({},this.options),t),this.gs,n&&this.names||void 0);return r.keyframeIds=new Set(this.keyframeIds),!this.server&&Qe&&t.target!==this.options.target&&Zt(this.options.target)!==Zt(t.target)&&en(r),r}allocateGSInstance(e){return this.gs[e]=(this.gs[e]||0)+1}getTag(){return this.tag||=(e=(({useCSSOMInjection:e,target:t,nonce:n})=>e?new an(t,n):new on(t,n))(this.options),new qt(e));var e}hasNameForId(e,t){var n;return(n=this.names.get(e)?.has(t))!=null&&n}registerName(e,t){ot(e),e.startsWith(tt)&&this.keyframeIds.add(e);let n=this.names.get(e);n?n.add(t):this.names.set(e,new Set([t]))}insertRules(e,t,n){this.registerName(e,t),this.getTag().insertRules(ot(e),n)}clearNames(e){this.names.has(e)&&this.names.get(e).clear()}clearRules(e){this.getTag().clearGroup(ot(e)),this.clearNames(e)}clearTag(){this.tag=void 0}},un=new WeakSet,dn={animationIterationCount:1,aspectRatio:1,borderImageOutset:1,borderImageSlice:1,borderImageWidth:1,columnCount:1,columns:1,flex:1,flexGrow:1,flexShrink:1,gridRow:1,gridRowEnd:1,gridRowSpan:1,gridRowStart:1,gridColumn:1,gridColumnEnd:1,gridColumnSpan:1,gridColumnStart:1,fontWeight:1,lineHeight:1,opacity:1,order:1,orphans:1,scale:1,tabSize:1,widows:1,zIndex:1,zoom:1,WebkitLineClamp:1,fillOpacity:1,floodOpacity:1,stopOpacity:1,strokeDasharray:1,strokeDashoffset:1,strokeMiterlimit:1,strokeOpacity:1,strokeWidth:1};function fn(e,t){return t==null||typeof t==`boolean`||t===``?``:typeof t!=`number`||t===0||e in dn||e.startsWith(`--`)?String(t).trim():t+`px`}var pn=47;function mn(e){if(e.charCodeAt(0)===45&&e.charCodeAt(1)===45)return e;let t=``;for(let n=0;n<e.length;n++){let r=e.charCodeAt(n);t+=r>=65&&r<=90?`-`+String.fromCharCode(r+32):e[n]}return t.startsWith(`ms-`)?`-`+t:t}var hn=Symbol.for(`sc-keyframes`);function gn(e){return typeof e==`object`&&!!e&&hn in e}function _n(e){return zt(e)&&!(e.prototype&&e.prototype.isReactComponent)}var vn=e=>e==null||!1===e||e===``,yn=Symbol.for(`react.client.reference`);function bn(e){return e.$$typeof===yn}function xn(e,t){for(let n in e){let r=e[n];e.hasOwnProperty(n)&&!vn(r)&&(Array.isArray(r)&&un.has(r)||zt(r)?t.push(mn(n)+`:`,r,`;`):Wt(r)?(t.push(n+` {`),xn(r,t),t.push(`}`)):t.push(mn(n)+`: `+fn(n,r)+`;`))}}function Sn(e,t,n,r,i=[]){if(vn(e))return i;let a=typeof e;if(a===`string`)return i.push(e),i;if(a===`function`)return bn(e)?i:_n(e)&&t?Sn(e(t),t,n,r,i):(i.push(e),i);if(Array.isArray(e)){for(let a=0;a<e.length;a++)Sn(e[a],t,n,r,i);return i}return Vt(e)?(i.push(`.${e.styledComponentId}`),i):gn(e)?(n?(e.inject(n,r),i.push(e.getName(r))):i.push(e),i):bn(e)?i:Wt(e)&&e.toString===Object.prototype.toString?(xn(e,i),i):(i.push(e.toString()),i)}var Cn=bt(Xe),wn=class{constructor(e,t,n){this.rules=e,this.componentId=t,this.baseHash=yt(Cn,t),this.baseStyle=n,ln.registerId(t)}generateAndInjectStyles(e,t,n){let r=this.baseStyle?this.baseStyle.generateAndInjectStyles(e,t,n):``;{let i=``;for(let r=0;r<this.rules.length;r++){let a=this.rules[r];if(typeof a==`string`)i+=a;else if(a)if(_n(a)){let r=a(e);typeof r==`string`?i+=r:r!=null&&!1!==r&&(i+=Ut(Sn(r,e,t,n)))}else i+=Ut(Sn(a,e,t,n))}if(i){this.dynamicNameCache||=new Map;let e=n.hash?n.hash+i:i,a=this.dynamicNameCache.get(e);if(!a){if(a=_t(yt(yt(this.baseHash,n.hash),i)>>>0),this.dynamicNameCache.size>=200){let e=this.dynamicNameCache.keys().next().value;e!==void 0&&this.dynamicNameCache.delete(e)}this.dynamicNameCache.set(e,a)}if(!t.hasNameForId(this.componentId,a)){let e=n(i,`.`+a,void 0,this.componentId);t.insertRules(this.componentId,a,e)}r=Ht(r,a)}}return r}},Tn=/&/g;function En(e,t){let n=0;for(;--t>=0&&e.charCodeAt(t)===92;)n++;return!(1&~n)}function Dn(e){let t=e.length,n=``,r=0,i=0,a=0,o=!1,s=!1;for(let c=0;c<t;c++){let l=e.charCodeAt(c);if(a!==0||o||l!==pn||e.charCodeAt(c+1)!==42)if(o)l===42&&e.charCodeAt(c+1)===pn&&(o=!1,c++);else if(l!==34&&l!==39||En(e,c)){if(a===0)if(l===123)i++;else if(l===125){if(i--,i<0){s=!0;let n=c+1;for(;n<t;){let t=e.charCodeAt(n);if(t===59||t===10)break;n++}n<t&&e.charCodeAt(n)===59&&n++,i=0,c=n-1,r=n;continue}i===0&&(n+=e.substring(r,c+1),r=c+1)}else l===59&&i===0&&(n+=e.substring(r,c+1),r=c+1)}else a===0?a=l:a===l&&(a=0);else o=!0,c++}return s||i!==0||a!==0?(r<t&&i===0&&a===0&&(n+=e.substring(r)),n):e}function On(e,t){let n=t+` `,r=`,`+n;for(let i=0;i<e.length;i++){let a=e[i];if(a.type===`rule`){a.value=(n+a.value).replaceAll(`,`,r);let e=a.props,t=[];for(let r=0;r<e.length;r++)t[r]=n+e[r];a.props=t}Array.isArray(a.children)&&a.type!==`@keyframes`&&On(a.children,t)}return e}function kn({options:e=ut,plugins:t=lt}=ut){let n,r,i,a=(e,t,i)=>i.startsWith(r)&&i.endsWith(r)&&i.replaceAll(r,``).length>0?`.${n}`:e,o=t.slice();o.push(e=>{e.type===`rule`&&e.value.includes(`&`)&&(i||=RegExp(`\\${r}\\b`,`g`),e.props[0]=e.props[0].replace(Tn,r).replace(i,a))}),e.prefix&&o.push(We),o.push(Ve);let s=[],c=He(o.concat(Ue(e=>s.push(e)))),l=(t,a=``,o=``,l=`&`)=>{n=l,r=a,i=void 0;let u=function(e){let t=e.indexOf(`//`)!==-1,n=e.indexOf(`}`)!==-1;if(!t&&!n)return e;if(!t)return Dn(e);let r=e.length,i=``,a=0,o=0,s=0,c=0,l=0,u=!1;for(;o<r;){let t=e.charCodeAt(o);if(t!==34&&t!==39||En(e,o))if(s===0)if(t===pn&&o+1<r&&e.charCodeAt(o+1)===42){for(o+=2;o+1<r&&(e.charCodeAt(o)!==42||e.charCodeAt(o+1)!==pn);)o++;o+=2}else if(t!==40)if(t!==41)if(c>0)o++;else if(t===42&&o+1<r&&e.charCodeAt(o+1)===pn)i+=e.substring(a,o),o+=2,a=o,u=!0;else if(t===pn&&o+1<r&&e.charCodeAt(o+1)===pn){for(i+=e.substring(a,o);o<r&&e.charCodeAt(o)!==10;)o++;a=o,u=!0}else t===123?l++:t===125&&l--,o++;else c>0&&c--,o++;else c++,o++;else o++;else s===0?s=t:s===t&&(s=0),o++}return u?(a<r&&(i+=e.substring(a)),l===0?i:Dn(i)):l===0?e:Dn(e)}(t),d=Pe(o||a?o+` `+a+` { `+u+` }`:u);return e.namespace&&(d=On(d,e.namespace)),s=[],Be(d,c),s},u=e,d=vt;for(let e=0;e<t.length;e++)t[e].name||nt(15),d=yt(d,t[e].name);return u!=null&&u.namespace&&(d=yt(d,u.namespace)),u!=null&&u.prefix&&(d=yt(d,`p`)),l.hash=d===vt?``:d.toString(),l}var An=new ln,jn=kn(),Mn=Ke.createContext({shouldForwardProp:void 0,styleSheet:An,stylis:jn,stylisPlugins:void 0});Mn.Consumer;function Nn(){return Ke.useContext(Mn)}var Pn=Ke.createContext(void 0);Pn.Consumer;var Fn=Object.prototype.hasOwnProperty,In={};function Ln(e,t){let n=typeof e==`string`?mt(e):`sc`;In[n]=(In[n]||0)+1;let r=n+`-`+xt(Xe+n+In[n]);return t?t+`-`+r:r}function Rn(e,t,n){let r=Vt(e),i=e,a=!Ct(e),{attrs:o=lt,componentId:s=Ln(t.displayName,t.parentComponentId),displayName:c=wt(e)}=t,l=t.displayName&&t.componentId?mt(t.displayName)+`-`+t.componentId:t.componentId||s,u=r&&i.attrs?i.attrs.concat(o).filter(Boolean):o,{shouldForwardProp:d}=t;if(r&&i.shouldForwardProp){let e=i.shouldForwardProp;if(t.shouldForwardProp){let n=t.shouldForwardProp;d=(t,r)=>e(t,r)&&n(t,r)}else d=e}let f=new wn(n,l,r?i.componentStyle:void 0);function p(e,t){return function(e,t,n){let{attrs:r,componentStyle:i,defaultProps:a,foldedComponentIds:o,styledComponentId:s,target:c}=e,l=Ke.useContext(Pn),u=Nn(),d=e.shouldForwardProp||u.shouldForwardProp,f=dt(t,l,a)||ut,p,m;{let e=Ke.useRef(null),n=e.current;if(n!==null&&n[1]===f&&n[2]===u.styleSheet&&n[3]===u.stylis&&n[7]===i&&function(e,t,n){let r=e,i=t,a=0;for(let e in i)if(Fn.call(i,e)&&(a++,r[e]!==i[e]))return!1;return a===n}(n[0],t,n[4]))p=n[5],m=n[6];else{p=function(e,t,n){let r=Object.assign(Object.assign({},t),{className:void 0,theme:n}),i=e.length>1;for(let n=0;n<e.length;n++){let a=e[n],o=zt(a)?a(i?Object.assign({},r):r):a;for(let e in o)e===`className`?r.className=Ht(r.className,o[e]):e===`style`?r.style=Object.assign(Object.assign({},r.style),o[e]):e in t&&t[e]===void 0||(r[e]=o[e])}return`className`in t&&typeof t.className==`string`&&(r.className=Ht(r.className,t.className)),r}(r,t,f),m=function(e,t,n,r){return e.generateAndInjectStyles(t,n,r)}(i,p,u.styleSheet,u.stylis);let n=0;for(let e in t)Fn.call(t,e)&&n++;e.current=[t,f,u.styleSheet,u.stylis,n,p,m,i]}}let h=p.as||c,g=function(e,t,n,r){let i={};for(let a in e)e[a]===void 0||a[0]===`$`||a===`as`||a===`theme`&&e.theme===n||(a===`forwardedAs`?i.as=e.forwardedAs:r&&!r(a,t)||(i[a]=e[a]));return i}(p,h,f,d),_=Ht(o,s);return m&&(_+=` `+m),p.className&&(_+=` `+p.className),g[Ct(h)&&h.includes(`-`)?`class`:`className`]=_,n&&(g.ref=n),(0,Ke.createElement)(h,g)}(m,e,t)}p.displayName=c;let m=Ke.forwardRef(p);return m.attrs=u,m.componentStyle=f,m.displayName=c,m.shouldForwardProp=d,m.foldedComponentIds=r?Ht(i.foldedComponentIds,i.styledComponentId):``,m.styledComponentId=l,m.target=r?i.target:e,Object.defineProperty(m,"defaultProps",{get(){return this._foldedDefaultProps},set(e){this._foldedDefaultProps=r?function(e,...t){for(let n of t)Gt(e,n,!0);return e}({},i.defaultProps,e):e}}),Kt(m,()=>`.${m.styledComponentId}`),a&&Rt(m,e,{attrs:!0,componentStyle:!0,displayName:!0,foldedComponentIds:!0,shouldForwardProp:!0,styledComponentId:!0,target:!0}),m}var zn=new Set(`a.abbr.address.area.article.aside.audio.b.bdi.bdo.blockquote.body.button.br.canvas.caption.cite.code.col.colgroup.data.datalist.dd.del.details.dfn.dialog.div.dl.dt.em.embed.fieldset.figcaption.figure.footer.form.h1.h2.h3.h4.h5.h6.header.hgroup.hr.html.i.iframe.img.input.ins.kbd.label.legend.li.main.map.mark.menu.meter.nav.object.ol.optgroup.option.output.p.picture.pre.progress.q.rp.rt.ruby.s.samp.search.section.select.slot.small.span.strong.sub.summary.sup.table.tbody.td.template.textarea.tfoot.th.thead.time.tr.u.ul.var.video.wbr.circle.clipPath.defs.ellipse.feBlend.feColorMatrix.feComponentTransfer.feComposite.feConvolveMatrix.feDiffuseLighting.feDisplacementMap.feDistantLight.feDropShadow.feFlood.feFuncA.feFuncB.feFuncG.feFuncR.feGaussianBlur.feImage.feMerge.feMergeNode.feMorphology.feOffset.fePointLight.feSpecularLighting.feSpotLight.feTile.feTurbulence.filter.foreignObject.g.image.line.linearGradient.marker.mask.path.pattern.polygon.polyline.radialGradient.rect.stop.svg.switch.symbol.text.textPath.tspan.use`.split(`.`));function Bn(e,t){let n=[e[0]];for(let r=0,i=t.length;r<i;r+=1)n.push(t[r],e[r+1]);return n}var Vn=e=>(un.add(e),e);function Hn(e,...t){if(zt(e)||Wt(e))return Vn(Sn(Bn(lt,[e,...t])));let n=e;return t.length===0&&n.length===1&&typeof n[0]==`string`?Sn(n):Vn(Sn(Bn(n,t)))}function Un(e,t,n=ut){if(!t)throw nt(1,t);let r=(r,...i)=>e(t,n,Hn(r,...i));return r.attrs=r=>Un(e,t,Object.assign(Object.assign({},n),{attrs:Array.prototype.concat(n.attrs,r).filter(Boolean)})),r.withConfig=r=>Un(e,t,Object.assign(Object.assign({},n),r)),r}var Wn=e=>Un(Rn,e),Gn=Wn;zn.forEach(e=>{Gn[e]=Wn(e)});var Kn,qn=class{constructor(e,t){this[Kn]=!0,this.inject=(e,t=jn)=>{let n=this.getName(t);if(!e.hasNameForId(this.id,n)){let r=t(this.rules,n,`@keyframes`);e.insertRules(this.id,n,r)}},this.name=e,this.id=tt+e,this.rules=t,ot(this.id),Kt(this,()=>{throw nt(12,String(this.name))})}getName(e=jn){return e.hash?this.name+_t(e.hash>>>0):this.name}};function Jn(e,...t){let n=Ut(Hn(e,...t));return new qn(xt(n),n)}Kn=hn,`${qe}`,`${qe}`,`${qe}`;var Yn=o((e=>{var t=Symbol.for(`react.transitional.element`),n=Symbol.for(`react.fragment`);function r(e,n,r){var i=null;if(r!==void 0&&(i=``+r),n.key!==void 0&&(i=``+n.key),`key`in n)for(var a in r={},n)a!==`key`&&(r[a]=n[a]);else r=n;return n=r.ref,{$$typeof:t,type:e,key:i,ref:n===void 0?null:n,props:r}}e.Fragment=n,e.jsx=r,e.jsxs=r})),M=o(((e,t)=>{t.exports=Yn()}))(),Xn=Jn`
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 `,Zn=Jn`
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 `,Qn=Jn`
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(14, 165, 233, 0);
-  }
-`,$n=Jn`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`,er=Jn`
-  0%, 100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(20px);
-  }
-`,tr=Gn.div`
-  min-height: 100vh;
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`,$n=Gn.div`
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px;
-  position: relative;
+  padding: 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
   overflow: hidden;
+  box-sizing: border-box;
 
   &::before {
     content: '☀️';
     position: absolute;
-    font-size: 250px;
-    top: -80px;
-    right: -80px;
-    opacity: 0.15;
-    animation: ${$n} 30s linear infinite;
-    pointer-events: none;
-  }
-
-  &::after {
-    content: '☁️';
-    position: absolute;
-    font-size: 180px;
-    bottom: -60px;
-    left: -60px;
+    font-size: clamp(130px, 22vw, 260px);
+    top: -50px;
+    right: -50px;
     opacity: 0.12;
-    animation: ${er} 15s ease-in-out infinite;
+    animation: ${Qn} 30s linear infinite;
     pointer-events: none;
   }
-`,nr=Gn.div`
+`,er=Gn.div`
   background: var(--card);
   backdrop-filter: blur(20px);
-  border-radius: 64px;
-  padding: 42px 38px;
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: clamp(30px, 6.5vw, 44px);
+  padding: clamp(22px, 5.5vw, 36px);
   width: 100%;
-  max-width: 480px;
+  max-width: 460px;                      /* JUSTERAD: Perfekt mellanstorlek, balanserad och snygg */
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
   position: relative;
   z-index: 1;
-  animation: ${Xn} 0.5s ease-out;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.2);
-  }
-`,rr=Gn.div`
+  animation: ${Xn} 0.4s ease-out;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: clamp(16px, 4.5vw, 26px);
+  box-sizing: border-box;
+`,tr=Gn.div`
+  display: flex;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 35px;
 
   .brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 
     .logoIcon {
-      font-size: 32px;
-      animation: ${$n} 8s linear infinite;
-      display: inline-block;
+      font-size: clamp(24px, 5vw, 32px);
+      animation: ${Qn} 12s linear infinite;
     }
 
     h1 {
-      font-size: 26px;
+      font-size: clamp(21px, 5vw, 26px);
       font-weight: 800;
       background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3));
-      background-size: 200% auto;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       letter-spacing: -0.5px;
     }
   }
-`,ir=Gn.form`
+`,nr=Gn.form`
   display: flex;
-  gap: 12px;
-  margin-bottom: 40px;
-`,ar=Gn.input`
+  gap: 10px;
+  width: 100%;
+`,rr=Gn.input`
   flex: 1;
-  padding: 16px 22px;
+  padding: clamp(11px, 3vw, 15px) 18px;
   border: 2px solid var(--border);
-  border-radius: 60px;
+  border-radius: 50px;
   background: rgba(255, 255, 255, 0.8);
   color: var(--text);
-  font-size: 15px;
+  font-size: clamp(13px, 3.5vw, 16px);
   font-weight: 500;
   outline: none;
   transition: all 0.2s;
+  min-width: 0;
 
   &:focus {
-    border-color: var(--accent-2);
-    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+    border-color: var(--accent);
     background: white;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
   }
 
   &::placeholder {
     color: var(--text-secondary);
   }
-`,or=Gn.button`
-  padding: 16px 32px;
+`,ir=Gn.button`
+  padding: 0 clamp(18px, 4vw, 26px);
   background: linear-gradient(135deg, var(--accent-2), var(--accent-3));
   color: white;
   border: none;
-  border-radius: 60px;
+  border-radius: 50px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: clamp(13px, 3.5vw, 15px);
   cursor: pointer;
   transition: all 0.2s;
-  animation: ${Qn} 2s infinite;
+  white-space: nowrap;
 
   &:hover {
-    transform: scale(1.02);
     filter: brightness(1.05);
-    padding-right: 38px;
   }
-
   &:active {
-    transform: scale(0.98);
+    transform: scale(0.96);
   }
-`,sr=Gn.div`
+`,ar=Gn.div`
   text-align: center;
-  animation: ${Xn} 0.4s ease-out;
-`,cr=Gn.div`
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`,or=Gn.div`
+  width: 100%;
 
   h2 {
-    font-size: 38px;
+    font-size: clamp(24px, 6vw, 34px);
     font-weight: 800;
     color: var(--text);
-    letter-spacing: -1px;
-    display: inline-flex;
+    letter-spacing: -0.5px;
+    display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     &::before {
       content: '📍';
-      font-size: 24px;
-      opacity: 0.7;
+      font-size: clamp(18px, 4.5vw, 24px);
     }
   }
-`,lr=Gn.p`
-  color: var(--accent-3);
-  font-size: 13px;
+`,sr=Gn.p`
+  color: var(--text-secondary);
+  font-size: clamp(11px, 3vw, 13px);
   font-weight: 600;
-  margin-top: 8px;
-  font-family: var(--mono);
-  background: rgba(234, 179, 8, 0.15);
-  display: inline-block;
-  padding: 5px 18px;
-  border-radius: 60px;
-  letter-spacing: 0.5px;
-`,ur=Gn.div`
-  margin: 20px 0;
+  margin-top: 4px;
+  opacity: 0.8;
+`,cr=Gn.div`
+  margin: clamp(10px, 4vw, 18px) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .weatherIcon {
-    font-size: 110px;
-    display: inline-block;
-    animation: ${Zn} 3s ease-in-out infinite;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+    font-size: clamp(66px, 16vw, 96px); /* Lagom krispig storlek på ikon */
+    animation: ${Zn} 3.5s ease-in-out infinite;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.08));
+    line-height: 1;
   }
 
   .tempValue {
-    font-size: 74px;
+    font-size: clamp(50px, 13vw, 72px); /* Tydlig temperatur utan att dominera för mycket */
     font-weight: 800;
     color: var(--text);
-    letter-spacing: -3px;
-    margin-top: 10px;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-top: 4px;
 
     span {
-      font-size: 28px;
+      font-size: clamp(22px, 5vw, 30px);
       font-weight: 600;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--accent);
+      margin-left: 2px;
     }
   }
-`,dr=Gn.p`
+`,lr=Gn.p`
   color: white;
-  font-size: 16px;
+  font-size: clamp(12px, 3.2vw, 14px);
   font-weight: 600;
-  margin: 15px 0 30px;
+  margin-bottom: 4px;
   text-transform: capitalize;
-  display: inline-block;
-  padding: 10px 28px;
+  padding: 6px 20px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  border-radius: 60px;
-  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
-  transition: all 0.2s;
-
-  &:hover {
-    transform: scale(1.03);
-    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
-  }
-`,fr=Gn.div`
+  border-radius: 50px;
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.2);
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`,ur=Gn.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 25px;
-`,pr=Gn.div`
-  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(34, 197, 94, 0.1));
-  padding: 16px 12px;
-  border-radius: 32px;
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border);
-  transition: all 0.2s;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-5px);
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-
-    .label, .value, .unit {
-      color: white;
-    }
-  }
+  gap: clamp(6px, 2vw, 14px);
+  width: 100%;
+  margin-top: 14px;
+`,dr=Gn.div`
+  background: rgba(14, 165, 233, 0.06);
+  padding: clamp(9px, 3vw, 15px) 4px;
+  border-radius: 18px;
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
 
   .label {
-    font-size: 11px;
+    font-size: clamp(8px, 2vw, 10px);
     font-weight: 700;
     color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 1px;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
   }
 
   .value {
-    font-size: 22px;
+    font-size: clamp(13px, 3.8vw, 18px);
     font-weight: 800;
     color: var(--text);
+    white-space: nowrap;
   }
 
   .unit {
-    font-size: 11px;
-    font-weight: 500;
+    font-size: clamp(9px, 2.2vw, 11px);
+    font-weight: 600;
     color: var(--text-secondary);
-    margin-left: 2px;
+    margin-left: 1px;
   }
-`,mr=Gn.div`
+`,fr=Gn.div`
   background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
   color: #ef4444;
-  padding: 14px;
-  border-radius: 60px;
+  padding: 10px;
+  border-radius: 50px;
   text-align: center;
   font-weight: 500;
-  margin-top: 20px;
-`,hr=Gn.div`
+  font-size: 14px;
+  width: 100%;
+`,pr=Gn.div`
   text-align: center;
-  padding: 50px;
+  padding: 20px;
+  width: 100%;
 
   .loader {
-    width: 50px;
-    height: 50px;
+    width: 34px;
+    height: 34px;
     border: 3px solid rgba(14, 165, 233, 0.2);
-    border-top: 3px solid var(--accent-3);
-    border-right: 3px solid var(--accent-2);
+    border-top: 3px solid var(--accent);
     border-radius: 50%;
-    animation: spinRound 0.8s linear infinite;
-    margin: 0 auto 15px;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 10px;
   }
-
-  @keyframes spinRound {
-    to { transform: rotate(360deg); }
-  }
-
-  p {
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
-`,gr=`a0382fa2b6d51c7b0306f5839d9e8099`,_r=e=>e&&{"01d":`☀️`,"01n":`🌙`,"02d":`⛅`,"02n":`☁️`,"03d":`☁️`,"03n":`☁️`,"04d":`☁️`,"04n":`☁️`,"09d":`🌧️`,"09n":`🌧️`,"10d":`🌦️`,"10n":`🌧️`,"11d":`⛈️`,"11n":`⛈️`,"13d":`❄️`,"13n":`❄️`,"50d":`🌫️`,"50n":`🌫️`}[e]||`🌤️`,vr=()=>new Date().toLocaleDateString(`en-US`,{weekday:`long`,month:`long`,day:`numeric`});function yr(){let[e,t]=(0,Ke.useState)(``),[n,r]=(0,Ke.useState)(null),[i,a]=(0,Ke.useState)(!1),[o,s]=(0,Ke.useState)(null);return(0,Ke.useEffect)(()=>{(async()=>{a(!0);try{let e=await(await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=Damascus&limit=1&appid=${gr}`)).json();if(!e.length)return;let t=await(await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${e[0].lat}&lon=${e[0].lon}&appid=${gr}&units=metric`)).json();r({name:e[0].name,temp:Math.round(t.main.temp),feelsLike:Math.round(t.main.feels_like),description:t.weather[0].description,iconCode:t.weather[0].icon,humidity:t.main.humidity,windSpeed:t.wind.speed})}catch(e){console.error(e)}finally{a(!1)}})()},[]),(0,M.jsx)(tr,{children:(0,M.jsxs)(nr,{children:[(0,M.jsx)(rr,{children:(0,M.jsxs)(`div`,{className:`brand`,children:[(0,M.jsx)(`span`,{className:`logoIcon`,children:`☀️`}),(0,M.jsx)(`h1`,{children:`WeatherWise`})]})}),(0,M.jsxs)(ir,{onSubmit:async n=>{if(n.preventDefault(),e.trim()){a(!0),s(null);try{let n=await(await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${e}&limit=1&appid=${gr}`)).json();if(!n.length)throw Error(`City not found`);let i=await(await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${n[0].lat}&lon=${n[0].lon}&appid=${gr}&units=metric`)).json();r({name:n[0].name,temp:Math.round(i.main.temp),feelsLike:Math.round(i.main.feels_like),description:i.weather[0].description,iconCode:i.weather[0].icon,humidity:i.main.humidity,windSpeed:i.wind.speed}),t(``)}catch(e){s(e.message)}finally{a(!1)}}},children:[(0,M.jsx)(ar,{type:`text`,placeholder:`Search city...`,value:e,onChange:e=>t(e.target.value)}),(0,M.jsx)(or,{type:`submit`,children:`Search`})]}),i&&(0,M.jsxs)(hr,{children:[(0,M.jsx)(`div`,{className:`loader`}),(0,M.jsx)(`p`,{children:`Loading weather...`})]}),o&&(0,M.jsx)(mr,{children:o}),n&&!i&&(0,M.jsxs)(sr,{children:[(0,M.jsxs)(cr,{children:[(0,M.jsx)(`h2`,{children:n.name}),(0,M.jsx)(lr,{children:vr()})]}),(0,M.jsxs)(ur,{children:[(0,M.jsx)(`div`,{className:`weatherIcon`,children:_r(n.iconCode)}),(0,M.jsxs)(`div`,{className:`tempValue`,children:[n.temp,(0,M.jsx)(`span`,{children:`°C`})]})]}),(0,M.jsx)(dr,{children:n.description}),(0,M.jsxs)(fr,{children:[(0,M.jsxs)(pr,{children:[(0,M.jsx)(`span`,{className:`label`,children:`💧 Humidity`}),(0,M.jsxs)(`span`,{className:`value`,children:[n.humidity,(0,M.jsx)(`span`,{className:`unit`,children:`%`})]})]}),(0,M.jsxs)(pr,{children:[(0,M.jsx)(`span`,{className:`label`,children:`💨 Wind`}),(0,M.jsxs)(`span`,{className:`value`,children:[n.windSpeed,(0,M.jsx)(`span`,{className:`unit`,children:`m/s`})]})]}),(0,M.jsxs)(pr,{children:[(0,M.jsx)(`span`,{className:`label`,children:`🌡️ Feels like`}),(0,M.jsxs)(`span`,{className:`value`,children:[n.feelsLike,(0,M.jsx)(`span`,{className:`unit`,children:`°C`})]})]})]})]})]})})}function br(){return(0,M.jsx)(M.Fragment,{children:(0,M.jsx)(yr,{})})}Ge.createRoot(document.getElementById(`root`)).render((0,M.jsx)(Ke.StrictMode,{children:(0,M.jsx)(br,{})}));
+  @keyframes spin { to { transform: rotate(360deg); } }
+`,mr=`a0382fa2b6d51c7b0306f5839d9e8099`,hr=e=>e&&{"01d":`☀️`,"01n":`🌙`,"02d":`⛅`,"02n":`☁️`,"03d":`☁️`,"03n":`☁️`,"04d":`☁️`,"04n":`☁️`,"09d":`🌧️`,"09n":`🌧️`,"10d":`🌦️`,"10n":`🌧️`,"11d":`⛈️`,"11n":`⛈️`,"13d":`❄️`,"13n":`❄️`,"50d":`🌫️`,"50n":`🌫️`}[e]||`🌤️`,gr=()=>new Date().toLocaleDateString(`en-US`,{weekday:`long`,month:`long`,day:`numeric`});function _r(){let[e,t]=(0,Ke.useState)(``),[n,r]=(0,Ke.useState)(null),[i,a]=(0,Ke.useState)(!1),[o,s]=(0,Ke.useState)(null);return(0,Ke.useEffect)(()=>{(async()=>{a(!0);try{let e=await(await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=Damascus&limit=1&appid=${mr}`)).json();if(!e.length)return;let t=await(await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${e[0].lat}&lon=${e[0].lon}&appid=${mr}&units=metric`)).json();r({name:e[0].name,temp:Math.round(t.main.temp),feelsLike:Math.round(t.main.feels_like),description:t.weather[0].description,iconCode:t.weather[0].icon,humidity:t.main.humidity,windSpeed:t.wind.speed})}catch(e){console.error(e)}finally{a(!1)}})()},[]),(0,M.jsx)($n,{children:(0,M.jsxs)(er,{children:[(0,M.jsx)(tr,{children:(0,M.jsxs)(`div`,{className:`brand`,children:[(0,M.jsx)(`span`,{className:`logoIcon`,children:`☀️`}),(0,M.jsx)(`h1`,{children:`WeatherWise`})]})}),(0,M.jsxs)(nr,{onSubmit:async n=>{if(n.preventDefault(),e.trim()){a(!0),s(null);try{let n=await(await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${e}&limit=1&appid=${mr}`)).json();if(!n.length)throw Error(`City not found`);let i=await(await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${n[0].lat}&lon=${n[0].lon}&appid=${mr}&units=metric`)).json();r({name:n[0].name,temp:Math.round(i.main.temp),feelsLike:Math.round(i.main.feels_like),description:i.weather[0].description,iconCode:i.weather[0].icon,humidity:i.main.humidity,windSpeed:i.wind.speed}),t(``)}catch(e){s(e.message)}finally{a(!1)}}},children:[(0,M.jsx)(rr,{type:`text`,placeholder:`Search city...`,value:e,onChange:e=>t(e.target.value)}),(0,M.jsx)(ir,{type:`submit`,children:`Search`})]}),i&&(0,M.jsxs)(pr,{children:[(0,M.jsx)(`div`,{className:`loader`}),(0,M.jsx)(`p`,{children:`Loading weather...`})]}),o&&(0,M.jsx)(fr,{children:o}),n&&!i&&(0,M.jsxs)(ar,{children:[(0,M.jsxs)(or,{children:[(0,M.jsx)(`h2`,{children:n.name}),(0,M.jsx)(sr,{children:gr()})]}),(0,M.jsxs)(cr,{children:[(0,M.jsx)(`div`,{className:`weatherIcon`,children:hr(n.iconCode)}),(0,M.jsxs)(`div`,{className:`tempValue`,children:[n.temp,(0,M.jsx)(`span`,{children:`°C`})]})]}),(0,M.jsx)(lr,{children:n.description}),(0,M.jsxs)(ur,{children:[(0,M.jsxs)(dr,{children:[(0,M.jsx)(`span`,{className:`label`,children:`💧 Humid`}),(0,M.jsxs)(`span`,{className:`value`,children:[n.humidity,(0,M.jsx)(`span`,{className:`unit`,children:`%`})]})]}),(0,M.jsxs)(dr,{children:[(0,M.jsx)(`span`,{className:`label`,children:`💨 Wind`}),(0,M.jsxs)(`span`,{className:`value`,children:[n.windSpeed,(0,M.jsx)(`span`,{className:`unit`,children:`m/s`})]})]}),(0,M.jsxs)(dr,{children:[(0,M.jsx)(`span`,{className:`label`,children:`🌡️ Feels`}),(0,M.jsxs)(`span`,{className:`value`,children:[n.feelsLike,(0,M.jsx)(`span`,{className:`unit`,children:`°C`})]})]})]})]})]})})}function vr(){return(0,M.jsx)(M.Fragment,{children:(0,M.jsx)(_r,{})})}Ge.createRoot(document.getElementById(`root`)).render((0,M.jsx)(Ke.StrictMode,{children:(0,M.jsx)(vr,{})}));
