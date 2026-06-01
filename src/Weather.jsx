@@ -58,7 +58,7 @@ const Card = styled.div`
   border-radius: clamp(30px, 6.5vw, 44px);
   padding: clamp(22px, 5.5vw, 36px);
   width: 100%;
-  max-width: 460px;                      /* JUSTERAD: Perfekt mellanstorlek, balanserad och snygg */
+  max-width: 460px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
   position: relative;
@@ -193,14 +193,14 @@ const IconArea = styled.div`
   align-items: center;
 
   .weatherIcon {
-    font-size: clamp(66px, 16vw, 96px); /* Lagom krispig storlek på ikon */
+    font-size: clamp(66px, 16vw, 96px);
     animation: ${gentleFloat} 3.5s ease-in-out infinite;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.08));
     line-height: 1;
   }
 
   .tempValue {
-    font-size: clamp(50px, 13vw, 72px); /* Tydlig temperatur utan att dominera för mycket */
+    font-size: clamp(50px, 13vw, 72px);
     font-weight: 800;
     color: var(--text);
     letter-spacing: -2px;

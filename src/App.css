@@ -1,4 +1,3 @@
-/* app.css */
 #root {
   width: 100vw;
   height: 100vh;
@@ -6,10 +5,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(
-    135deg,
-    #e0f2fe 0%,
-    #fef08a 100%
-  ); /* Din snygga gradient */
+  background: linear-gradient(135deg, #e0f2fe 0%, #fef08a 100%);
   overflow: hidden;
 }
